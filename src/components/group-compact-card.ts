@@ -27,8 +27,15 @@ export class CreateFanGroupCompactCard extends LitElement {
             transform: rotate(360deg);
           }
         }
+        .shape-icon.on {
+          background: rgba(var(--mush-rgb-state-fan), 0.25);
+          color: rgb(var(--mush-rgb-state-fan));
+        }
         .shape-icon.on ha-icon {
           animation: spin 1.5s linear infinite;
+        }
+        .shape-icon {
+          cursor: pointer;
         }
         .secondary-row {
           display: flex;
@@ -68,6 +75,13 @@ export class CreateFanGroupCompactCard extends LitElement {
     }
   }
 
+  private _onIconClick(e: Event): void {
+    e.stopPropagation();
+    if (this.hass && this.fanEntitiesList?.length) {
+      groupFanToggle(this.hass, this.fanEntitiesList);
+    }
+  }
+
   private _openRemote(): void {
     this.dispatchEvent(
       new CustomEvent('open-remote', {
@@ -97,7 +111,7 @@ export class CreateFanGroupCompactCard extends LitElement {
     return html`
       <ha-card>
         <div class="card-content" @click=${this._openRemote}>
-          <div class="shape-icon ${fanOn ? 'on' : ''}">
+          <div class="shape-icon ${fanOn ? 'on' : ''}" @click=${this._onIconClick}>
             <ha-icon .icon=${'mdi:fan'}></ha-icon>
           </div>
           <div class="state-info">
@@ -118,6 +132,7 @@ export class CreateFanGroupCompactCard extends LitElement {
               .active=${fanOn}
               .icon=${'mdi:fan'}
               .label=${'Fan'}
+              .type=${'fan'}
               @toggle-click=${this._onFanToggle}
             ></create-fan-toggle>
             ${hasLight
@@ -125,6 +140,7 @@ export class CreateFanGroupCompactCard extends LitElement {
                   .active=${lightOn}
                   .icon=${'mdi:lightbulb'}
                   .label=${'Light'}
+                  .type=${'light'}
                   @toggle-click=${this._onLightToggle}
                 ></create-fan-toggle>`
               : ''}

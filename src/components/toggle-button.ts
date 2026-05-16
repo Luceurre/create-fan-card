@@ -1,17 +1,17 @@
 import { LitElement, html, css, CSSResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { mushroomTheme, mushroomCardStyle } from '../utils/mushroom-theme';
+import { mushroomTheme } from '../utils/mushroom-theme';
 
 @customElement('create-fan-toggle')
 export class CreateFanToggle extends LitElement {
   @property({ type: Boolean }) active = false;
   @property({ type: String }) icon = 'mdi:fan';
   @property({ type: String }) label = '';
+  @property({ type: String }) type: 'fan' | 'light' = 'fan';
 
   static get styles(): CSSResult[] {
     return [
       mushroomTheme,
-      mushroomCardStyle,
       css`
         :host {
           display: inline-block;
@@ -26,13 +26,17 @@ export class CreateFanToggle extends LitElement {
           border: none;
           background: rgba(var(--mush-rgb-info), 0.2);
           cursor: pointer;
-          transition: background 0.2s ease;
+          transition: all 0.2s ease;
           color: var(--mush-card-secondary-color);
           padding: 0;
         }
-        button.active {
-          background: rgba(var(--mush-rgb-active), 0.25);
-          color: var(--primary-color);
+        button.active.fan {
+          background: rgba(var(--mush-rgb-state-fan), 0.25);
+          color: rgb(var(--mush-rgb-state-fan));
+        }
+        button.active.light {
+          background: rgba(var(--mush-rgb-state-light), 0.25);
+          color: rgb(var(--mush-rgb-state-light));
         }
         button:hover {
           filter: brightness(1.1);
@@ -45,7 +49,7 @@ export class CreateFanToggle extends LitElement {
   }
 
   private _handleClick(e: Event) {
-    e.stopPropagation(); // Prevent card tap from firing
+    e.stopPropagation();
     this.dispatchEvent(
       new CustomEvent('toggle-click', {
         bubbles: true,
@@ -58,7 +62,7 @@ export class CreateFanToggle extends LitElement {
   render() {
     return html`
       <button
-        class="${this.active ? 'active' : ''}"
+        class="${this.active ? 'active' : ''} ${this.type}"
         @click=${this._handleClick}
         aria-label="${this.label}"
         title="${this.label}"

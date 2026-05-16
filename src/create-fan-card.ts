@@ -3,6 +3,7 @@ import { customElement, state } from 'lit/decorators.js';
 
 import './components/compact-card';
 import './components/remote-popup';
+import './create-fan-group-card';
 
 import type { HomeAssistant, LovelaceCardConfig } from './types/home-assistant';
 import type { FanEntities } from './utils/device-entities';

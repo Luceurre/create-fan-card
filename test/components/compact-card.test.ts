@@ -88,67 +88,54 @@ describe('create-fan-compact-card', () => {
     expect(primary?.textContent?.trim()).toBe('My Custom Name');
   });
 
-  it('renders fan toggle with correct active state', async () => {
+  it('renders fan icon with "on" class when fan is on', async () => {
     const element = await renderCard();
-    const toggles = element.shadowRoot?.querySelectorAll('create-fan-toggle');
-    const fanToggle = toggles?.[0] as HTMLElement & { active: boolean; icon: string } | undefined;
+    const icons = element.shadowRoot?.querySelectorAll('.icons-row .shape-icon');
+    const fanIcon = icons?.[0];
 
-    expect(fanToggle).toBeDefined();
-    expect(fanToggle!.active).toBe(true);
-    expect(fanToggle!.icon).toBe('mdi:fan');
+    expect(fanIcon).toBeDefined();
+    expect(fanIcon!.classList.contains('on')).toBe(true);
   });
 
-  it('renders light toggle when light entity exists', async () => {
+  it('renders light icon when light entity exists', async () => {
     const element = await renderCard();
-    const toggles = element.shadowRoot?.querySelectorAll('create-fan-toggle');
+    const icons = element.shadowRoot?.querySelectorAll('.icons-row .shape-icon');
 
-    expect(toggles?.length).toBe(2);
-    const lightToggle = toggles![1] as HTMLElement & { active: boolean; icon: string };
-    expect(lightToggle.active).toBe(true);
-    expect(lightToggle.icon).toBe('mdi:lightbulb');
+    expect(icons?.length).toBe(2);
+    const lightIcon = icons![1];
+    expect(lightIcon.classList.contains('light')).toBe(true);
+    expect(lightIcon.classList.contains('light-on')).toBe(true);
   });
 
-  it('does NOT render light toggle when no light entity', async () => {
+  it('does NOT render light icon when no light entity', async () => {
     const element = await renderCard({
       entities: createMockEntities(false, false),
     });
-    const toggles = element.shadowRoot?.querySelectorAll('create-fan-toggle');
+    const icons = element.shadowRoot?.querySelectorAll('.icons-row .shape-icon');
 
-    expect(toggles?.length).toBe(1);
+    expect(icons?.length).toBe(1);
   });
 
-  it('fan toggle-click calls callFanToggle', async () => {
+  it('clicking fan icon calls fan toggle service', async () => {
     const hass = createMockHass();
     const element = await renderCard({ hass });
 
-    const fanToggle = element.shadowRoot?.querySelector('create-fan-toggle');
-    fanToggle?.dispatchEvent(
-      new CustomEvent('toggle-click', {
-        bubbles: true,
-        composed: true,
-        detail: { active: true },
-      })
-    );
+    const fanIcon = element.shadowRoot?.querySelector('.icons-row .shape-icon');
+    fanIcon?.click();
 
     expect(hass.callService).toHaveBeenCalledWith('fan', 'toggle', {
       entity_id: 'fan.living_room',
     });
   });
 
-  it('light toggle-click calls callLightToggle', async () => {
+  it('clicking light icon calls light toggle service', async () => {
     const hass = createMockHass();
     const element = await renderCard({ hass });
 
-    const toggles = element.shadowRoot?.querySelectorAll('create-fan-toggle');
-    const lightToggle = toggles?.[1];
+    const icons = element.shadowRoot?.querySelectorAll('.icons-row .shape-icon');
+    const lightIcon = icons?.[1];
 
-    lightToggle?.dispatchEvent(
-      new CustomEvent('toggle-click', {
-        bubbles: true,
-        composed: true,
-        detail: { active: true },
-      })
-    );
+    lightIcon?.click();
 
     expect(hass.callService).toHaveBeenCalledWith('light', 'toggle', {
       entity_id: 'light.living_room_light',

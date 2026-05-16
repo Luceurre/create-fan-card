@@ -7,7 +7,6 @@ import type { GroupFanState } from '../utils/group-state';
 import { groupFanToggle, groupLightToggle } from '../utils/group-service';
 import { mushroomTheme, mushroomCardStyle } from '../utils/mushroom-theme';
 
-import './toggle-button';
 import './speed-dots';
 import './timer-display';
 
@@ -27,6 +26,16 @@ export class CreateFanGroupCompactCard extends LitElement {
             transform: rotate(360deg);
           }
         }
+        .icons-row {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 8px;
+          flex-shrink: 0;
+        }
+        .shape-icon {
+          cursor: pointer;
+        }
         .shape-icon.on {
           background: rgba(var(--mush-rgb-state-fan), 0.25);
           color: rgb(var(--mush-rgb-state-fan));
@@ -34,23 +43,15 @@ export class CreateFanGroupCompactCard extends LitElement {
         .shape-icon.on ha-icon {
           animation: spin 1.5s linear infinite;
         }
-        .shape-icon {
-          cursor: pointer;
+        .shape-icon.light-on {
+          background: rgba(var(--mush-rgb-state-light), 0.25);
+          color: rgb(var(--mush-rgb-state-light));
         }
         .secondary-row {
           display: flex;
           flex-direction: row;
           align-items: center;
           gap: 8px;
-        }
-        .card-actions {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 8px;
-          margin-left: auto;
-          flex-shrink: 0;
         }
       `,
     ];
@@ -61,24 +62,17 @@ export class CreateFanGroupCompactCard extends LitElement {
     return getGroupState(this.hass, this.fanEntitiesList);
   }
 
-  private _onFanToggle(e: CustomEvent<{ active: boolean }>): void {
+  private _onFanToggle(e: Event): void {
     e.stopPropagation();
     if (this.hass && this.fanEntitiesList?.length) {
       groupFanToggle(this.hass, this.fanEntitiesList);
     }
   }
 
-  private _onLightToggle(e: CustomEvent<{ active: boolean }>): void {
+  private _onLightToggle(e: Event): void {
     e.stopPropagation();
     if (this.hass && this.fanEntitiesList?.length) {
       groupLightToggle(this.hass, this.fanEntitiesList);
-    }
-  }
-
-  private _onIconClick(e: Event): void {
-    e.stopPropagation();
-    if (this.hass && this.fanEntitiesList?.length) {
-      groupFanToggle(this.hass, this.fanEntitiesList);
     }
   }
 
@@ -111,8 +105,15 @@ export class CreateFanGroupCompactCard extends LitElement {
     return html`
       <ha-card>
         <div class="card-content" @click=${this._openRemote}>
-          <div class="shape-icon ${fanOn ? 'on' : ''}" @click=${this._onIconClick}>
-            <ha-icon .icon=${'mdi:fan'}></ha-icon>
+          <div class="icons-row">
+            <div class="shape-icon ${fanOn ? 'on' : ''}" @click=${this._onFanToggle}>
+              <ha-icon .icon=${'mdi:fan'}></ha-icon>
+            </div>
+            ${hasLight
+              ? html`<div class="shape-icon light ${lightOn ? 'light-on' : ''}" @click=${this._onLightToggle}>
+                  <ha-icon .icon=${'mdi:lightbulb'}></ha-icon>
+                </div>`
+              : ''}
           </div>
           <div class="state-info">
             <span class="primary">${this.name}</span>
@@ -126,24 +127,6 @@ export class CreateFanGroupCompactCard extends LitElement {
                   ></create-fan-timer-display>`
                 : ''}
             </div>
-          </div>
-          <div class="card-actions">
-            <create-fan-toggle
-              .active=${fanOn}
-              .icon=${'mdi:fan'}
-              .label=${'Fan'}
-              .type=${'fan'}
-              @toggle-click=${this._onFanToggle}
-            ></create-fan-toggle>
-            ${hasLight
-              ? html`<create-fan-toggle
-                  .active=${lightOn}
-                  .icon=${'mdi:lightbulb'}
-                  .label=${'Light'}
-                  .type=${'light'}
-                  @toggle-click=${this._onLightToggle}
-                ></create-fan-toggle>`
-              : ''}
           </div>
         </div>
       </ha-card>

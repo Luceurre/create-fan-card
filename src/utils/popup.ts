@@ -26,7 +26,7 @@ export function openPopup(
         },
       },
     });
-    element.dispatchEvent(event);
+    document.body.dispatchEvent(event);
   } else {
     const entityId = (config.content as Record<string, unknown>).entity as string | undefined;
     if (entityId) {

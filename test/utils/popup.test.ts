@@ -18,13 +18,10 @@ describe('popup utils', () => {
     expect(isBrowserModAvailable()).toBe(false);
   });
 
-  it('opens browser_mod popup via ll-custom event', () => {
+  it('opens browser_mod popup via ll-custom event on document.body', () => {
     vi.spyOn(customElements, 'get').mockReturnValue({} as CustomElementConstructor);
     const element = document.createElement('div');
-    const dispatchSpy = vi.fn();
-    Object.defineProperty(element, 'dispatchEvent', {
-      value: dispatchSpy,
-    });
+    const dispatchSpy = vi.spyOn(document.body, 'dispatchEvent');
 
     openPopup(element, {
       title: 'Fan Controls',

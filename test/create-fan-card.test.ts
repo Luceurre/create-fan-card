@@ -265,8 +265,8 @@ describe('create-fan-card', () => {
 
     const card = createCard();
     const hass = createMockHass();
-    const popupListener = vi.fn();
     const entities = createExpectedEntities();
+    const bodySpy = vi.spyOn(document.body, 'dispatchEvent');
 
     card.setConfig({
       type: 'custom:create-fan-card',
@@ -274,7 +274,6 @@ describe('create-fan-card', () => {
       name: 'Bedroom Fan',
     });
     card.hass = hass;
-    card.addEventListener('ll-custom', popupListener);
     document.body.appendChild(card);
     await card.updateComplete;
 
@@ -290,9 +289,11 @@ describe('create-fan-card', () => {
       }),
     );
 
-    expect(popupListener).toHaveBeenCalledTimes(1);
-    const popupEvent = popupListener.mock.calls[0][0] as CustomEvent;
-    expect(popupEvent.detail).toEqual({
+    const llCustomCalls = bodySpy.mock.calls
+      .map(call => call[0] as CustomEvent)
+      .filter(e => e.type === 'll-custom');
+    expect(llCustomCalls.length).toBe(1);
+    expect(llCustomCalls[0].detail).toEqual({
       browser_mod: {
         service: 'browser_mod.popup',
         data: {

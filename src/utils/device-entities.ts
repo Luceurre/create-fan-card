@@ -47,8 +47,7 @@ export function discoverFanEntities(hass: HomeAssistant, fanEntityId: string): F
   };
 
   for (const [key, candidateId] of Object.entries(candidates)) {
-    const entry = hass.entities[candidateId];
-    if (entry && !entry.disabled_by) {
+    if (hass.states[candidateId]) {
       result[key] = candidateId;
     }
   }

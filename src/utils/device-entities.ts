@@ -46,15 +46,11 @@ export function discoverFanEntities(hass: HomeAssistant, fanEntityId: string): F
     cooldown4h: `button.${base}_cooldown_4h`,
   };
 
-  console.log('[create-fan-card] discoverFanEntities:', { fanEntityId, base, candidates });
   for (const [key, candidateId] of Object.entries(candidates)) {
-    const found = !!hass.states[candidateId];
-    console.log(`[create-fan-card]   ${key}: ${candidateId} → ${found ? 'FOUND' : 'NOT FOUND'}`);
-    if (found) {
+    if (hass.states[candidateId]) {
       result[key] = candidateId;
     }
   }
-  console.log('[create-fan-card] result:', result);
 
   return result;
 }

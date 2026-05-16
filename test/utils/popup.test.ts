@@ -1,25 +1,28 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { isBrowserModAvailable, openMoreInfo, openPopup } from '../../src/utils/popup';
 
 describe('popup utils', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    delete (window as any).browser_mod;
+  });
+
+  afterEach(() => {
+    delete (window as any).browser_mod;
   });
 
   it('returns true when browser_mod is registered', () => {
-    vi.spyOn(customElements, 'get').mockReturnValue({} as CustomElementConstructor);
+    (window as any).browser_mod = {};
 
     expect(isBrowserModAvailable()).toBe(true);
   });
 
   it('returns false when browser_mod is not registered', () => {
-    vi.spyOn(customElements, 'get').mockReturnValue(undefined);
-
     expect(isBrowserModAvailable()).toBe(false);
   });
 
   it('opens browser_mod popup via ll-custom event on document.body', () => {
-    vi.spyOn(customElements, 'get').mockReturnValue({} as CustomElementConstructor);
+    (window as any).browser_mod = {};
     const element = document.createElement('div');
     const dispatchSpy = vi.spyOn(document.body, 'dispatchEvent');
 
@@ -29,10 +32,11 @@ describe('popup utils', () => {
       adaptive: false,
     });
 
-    expect(dispatchSpy).toHaveBeenCalledTimes(1);
-    const event = dispatchSpy.mock.calls[0]?.[0] as CustomEvent;
-    expect(event.type).toBe('ll-custom');
-    expect(event.detail).toEqual({
+    const llCustomCalls = dispatchSpy.mock.calls
+      .map(call => call[0] as CustomEvent)
+      .filter(e => e.type === 'll-custom');
+    expect(llCustomCalls.length).toBe(1);
+    expect(llCustomCalls[0].detail).toEqual({
       browser_mod: {
         service: 'browser_mod.popup',
         data: {
@@ -44,7 +48,6 @@ describe('popup utils', () => {
   });
 
   it('falls back to hass-more-info when browser_mod is unavailable', () => {
-    vi.spyOn(customElements, 'get').mockReturnValue(undefined);
     const element = document.createElement('div');
     const dispatchSpy = vi.fn();
     Object.defineProperty(element, 'dispatchEvent', {

@@ -168,20 +168,17 @@ function createCard(): CreateFanCardElement {
 }
 
 function mockBrowserModAvailability(available: boolean): void {
-  const nativeGet = customElements.get.bind(customElements);
-
-  vi.spyOn(customElements, 'get').mockImplementation((name: string) => {
-    if (name === 'browser-mod') {
-      return available ? class extends HTMLElement {} : undefined;
-    }
-
-    return nativeGet(name);
-  });
+  if (available) {
+    (window as any).browser_mod = {};
+  } else {
+    delete (window as any).browser_mod;
+  }
 }
 
 afterEach(() => {
   document.body.innerHTML = '';
   vi.restoreAllMocks();
+  delete (window as any).browser_mod;
 });
 
 describe('create-fan-card', () => {

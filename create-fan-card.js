@@ -570,7 +570,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
               </div>
             </div>
           `:""}
-    `}};function Ot(){return void 0!==customElements.get("browser-mod")}t([pt({attribute:!1})],kt.prototype,"hass",void 0),t([pt({attribute:!1})],kt.prototype,"entities",void 0),kt=t([ct("create-fan-remote-popup")],kt);let Pt=class extends at{set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._entities=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entity&&!t.entities?.fan)throw new Error("entity is required");this._config=t,this._hass&&(this._entities=this._resolveEntities(this._hass,t))}getCardSize(){return 6}_resolveEntities(t,e){return e.entities?e.entities:gt(t,e.entity)}render(){return this._hass&&this._entities?B`
+    `}};function Ot(){return void 0!==window.browser_mod}t([pt({attribute:!1})],kt.prototype,"hass",void 0),t([pt({attribute:!1})],kt.prototype,"entities",void 0),kt=t([ct("create-fan-remote-popup")],kt);let Pt=class extends at{set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._entities=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entity&&!t.entities?.fan)throw new Error("entity is required");this._config=t,this._hass&&(this._entities=this._resolveEntities(this._hass,t))}getCardSize(){return 6}_resolveEntities(t,e){return e.entities?e.entities:gt(t,e.entity)}render(){return this._hass&&this._entities?B`
       <ha-card>
         <create-fan-remote-popup
           .hass=${this._hass}

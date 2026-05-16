@@ -1,5 +1,5 @@
 export function isBrowserModAvailable(): boolean {
-  return customElements.get('browser-mod') !== undefined;
+  return typeof (window as any).browser_mod !== 'undefined';
 }
 
 export interface PopupConfig {

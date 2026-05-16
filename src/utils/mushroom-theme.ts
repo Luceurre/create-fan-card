@@ -69,12 +69,13 @@ export const mushroomCardStyle = css`
     width: var(--mush-shape-size);
     height: var(--mush-shape-size);
     border-radius: var(--mush-shape-border-radius);
-    background: rgba(var(--mush-rgb-state-fan), 0.2);
+    background: rgba(var(--rgb-primary-text-color, 255, 255, 255), 0.05);
+    color: var(--primary-text-color);
     flex-shrink: 0;
   }
 
   .shape-icon.light {
-    background: rgba(var(--mush-rgb-state-light), 0.2);
+    background: rgba(var(--rgb-primary-text-color, 255, 255, 255), 0.05);
   }
 
   .state-info {
@@ -112,11 +113,11 @@ export const mushroomCardStyle = css`
     height: var(--mush-control-height);
     border-radius: var(--mush-control-border-radius);
     border: none;
-    background: rgba(var(--mush-rgb-info), 0.2);
+    background: rgba(var(--rgb-primary-text-color, 255, 255, 255), 0.05);
     cursor: pointer;
     transition: background 0.2s ease;
     flex-shrink: 0;
-    color: var(--mush-card-secondary-color);
+    color: var(--primary-text-color);
   }
 
   .toggle-button.active {

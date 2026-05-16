@@ -21,13 +21,6 @@ export class CreateFanCompactCard extends LitElement {
       mushroomTheme,
       mushroomCardStyle,
       css`
-        :host {
-          display: block;
-          max-width: 320px;
-        }
-        ha-card {
-          padding: 10px 12px;
-        }
         @keyframes spin {
           to {
             transform: rotate(360deg);
@@ -42,16 +35,18 @@ export class CreateFanCompactCard extends LitElement {
         }
         .shape-icon {
           cursor: pointer;
+          background: rgba(var(--rgb-primary-text-color, 255, 255, 255), 0.05);
+          color: var(--primary-text-color);
         }
         .shape-icon.on {
-          background: rgba(var(--mush-rgb-state-fan), 0.25);
+          background: rgba(var(--mush-rgb-state-fan), 0.2);
           color: rgb(var(--mush-rgb-state-fan));
         }
         .shape-icon.on ha-icon {
           animation: spin 1.5s linear infinite;
         }
         .shape-icon.light-on {
-          background: rgba(var(--mush-rgb-state-light), 0.25);
+          background: rgba(var(--mush-rgb-state-light), 0.2);
           color: rgb(var(--mush-rgb-state-light));
         }
         .secondary-row {

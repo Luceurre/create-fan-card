@@ -1,4 +1,4 @@
-import type { HomeAssistant, EntityRegistryEntry } from '../types/home-assistant';
+import type { HomeAssistant } from '../types/home-assistant';
 
 export interface FanEntities {
   fan: string;
@@ -12,40 +12,44 @@ export interface FanEntities {
   cooldown4h?: string;
 }
 
+/**
+ * Discover companion entities for a fan by matching entity ID patterns.
+ *
+ * The ESPSomfy-RTS firmware publishes all fan entities under the same MQTT device,
+ * so device_id-based discovery would match ALL fans' entities.
+ * Instead, we derive the base name from the fan entity ID and match siblings by prefix.
+ *
+ * For fan.espsomfyrts_fan_3:
+ *   base = "espsomfyrts_fan_3"
+ *   light    = light.espsomfyrts_fan_3_light
+ *   color    = select.espsomfyrts_fan_3_color
+ *   direction= switch.espsomfyrts_fan_3_direction
+ *   mute     = switch.espsomfyrts_fan_3_mute
+ *   timer    = sensor.espsomfyrts_fan_3_timer
+ *   cooldown = button.espsomfyrts_fan_3_cooldown_{1h,2h,4h}
+ */
 export function discoverFanEntities(hass: HomeAssistant, fanEntityId: string): FanEntities {
   const result: FanEntities = { fan: fanEntityId };
-  const fanEntry = hass.entities[fanEntityId];
 
-  if (!fanEntry?.device_id) {
-    return result;
-  }
+  const dotIndex = fanEntityId.indexOf('.');
+  if (dotIndex === -1) return result;
+  const base = fanEntityId.substring(dotIndex + 1);
 
-  const deviceId = fanEntry.device_id;
-  const siblings = (Object.entries(hass.entities) as Array<[string, EntityRegistryEntry]>).filter(
-    ([, entry]) => entry.device_id === deviceId && entry.disabled_by === undefined,
-  );
+  const candidates: Record<keyof Omit<FanEntities, 'fan'>, string> = {
+    light: `light.${base}_light`,
+    color: `select.${base}_color`,
+    direction: `switch.${base}_direction`,
+    mute: `switch.${base}_mute`,
+    timer: `sensor.${base}_timer`,
+    cooldown1h: `button.${base}_cooldown_1h`,
+    cooldown2h: `button.${base}_cooldown_2h`,
+    cooldown4h: `button.${base}_cooldown_4h`,
+  };
 
-  for (const [entityId] of siblings) {
-    if (entityId === fanEntityId) {
-      continue;
-    }
-
-    if (entityId.startsWith('light.') && entityId.endsWith('_light')) {
-      result.light = entityId;
-    } else if (entityId.startsWith('select.') && entityId.endsWith('_color')) {
-      result.color = entityId;
-    } else if (entityId.startsWith('switch.') && entityId.endsWith('_direction')) {
-      result.direction = entityId;
-    } else if (entityId.startsWith('switch.') && entityId.endsWith('_mute')) {
-      result.mute = entityId;
-    } else if (entityId.startsWith('sensor.') && entityId.endsWith('_timer')) {
-      result.timer = entityId;
-    } else if (entityId.startsWith('button.') && entityId.endsWith('_cooldown_1h')) {
-      result.cooldown1h = entityId;
-    } else if (entityId.startsWith('button.') && entityId.endsWith('_cooldown_2h')) {
-      result.cooldown2h = entityId;
-    } else if (entityId.startsWith('button.') && entityId.endsWith('_cooldown_4h')) {
-      result.cooldown4h = entityId;
+  for (const [key, candidateId] of Object.entries(candidates)) {
+    const entry = hass.entities[candidateId];
+    if (entry && !entry.disabled_by) {
+      result[key] = candidateId;
     }
   }
 

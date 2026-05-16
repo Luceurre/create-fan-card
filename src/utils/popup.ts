@@ -17,12 +17,12 @@ export function openPopup(
       bubbles: true,
       composed: true,
       detail: {
-        action: 'fire-dom-event',
         browser_mod: {
-          action: 'popup',
-          title: config.title,
-          adaptive: config.adaptive ?? true,
-          content: config.content,
+          service: 'browser_mod.popup',
+          data: {
+            title: config.title,
+            content: config.content,
+          },
         },
       },
     });

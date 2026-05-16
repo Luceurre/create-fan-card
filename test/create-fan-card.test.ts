@@ -293,15 +293,15 @@ describe('create-fan-card', () => {
     expect(popupListener).toHaveBeenCalledTimes(1);
     const popupEvent = popupListener.mock.calls[0][0] as CustomEvent;
     expect(popupEvent.detail).toEqual({
-      action: 'fire-dom-event',
       browser_mod: {
-        action: 'popup',
-        title: 'Bedroom Fan',
-        adaptive: true,
-        content: {
-          type: 'custom:create-fan-remote-popup-card',
-          entity: 'fan.test_fan',
-          entities,
+        service: 'browser_mod.popup',
+        data: {
+          title: 'Bedroom Fan',
+          content: {
+            type: 'custom:create-fan-remote-popup-card',
+            entity: 'fan.test_fan',
+            entities,
+          },
         },
       },
     });

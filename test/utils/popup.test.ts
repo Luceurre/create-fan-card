@@ -36,12 +36,12 @@ describe('popup utils', () => {
     const event = dispatchSpy.mock.calls[0]?.[0] as CustomEvent;
     expect(event.type).toBe('ll-custom');
     expect(event.detail).toEqual({
-      action: 'fire-dom-event',
       browser_mod: {
-        action: 'popup',
-        title: 'Fan Controls',
-        adaptive: false,
-        content: { entity: 'fan.living_room' },
+        service: 'browser_mod.popup',
+        data: {
+          title: 'Fan Controls',
+          content: { entity: 'fan.living_room' },
+        },
       },
     });
   });

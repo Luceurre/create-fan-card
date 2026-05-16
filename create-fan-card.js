@@ -206,6 +206,13 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
       <ha-icon .icon=${"mdi:timer-outline"}></ha-icon>
       <span>${this._formatTime(this.remaining)}</span>
     `}};t([pt({type:Number})],Tt.prototype,"duration",void 0),t([pt({type:Number})],Tt.prototype,"remaining",void 0),Tt=t([ct("create-fan-timer-display")],Tt);let Lt=class extends at{constructor(){super(...arguments),this.entityId="",this.name=""}static get styles(){return[Ct,kt,r`
+        :host {
+          display: block;
+          max-width: 320px;
+        }
+        ha-card {
+          padding: 10px 12px;
+        }
         @keyframes spin {
           to {
             transform: rotate(360deg);
@@ -238,7 +245,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           align-items: center;
           gap: 8px;
         }
-      `]}_getDisplayName(){return this.name?this.name:this.hass&&this.entityId?this.hass.states[this.entityId]?.attributes?.friendly_name??this.entityId:""}_isFanOn(){return!(!this.hass||!this.entityId)&&mt(this.hass,this.entityId)}_getSpeed(){if(!this.hass||!this.entityId)return 0;const t=vt(this.hass,this.entityId);if(!t)return 0;const e=t.match(/\d+/);return e?parseInt(e[0],10):0}_isLightOn(){return!(!this.hass||!this.entities?.light)&&mt(this.hass,this.entities.light)}_getTimerData(){if(!this.hass||!this.entities?.timer)return{duration:0,remaining:0};return bt(this.hass,this.entities.timer)??{duration:0,remaining:0}}_onFanToggle(t){t.stopPropagation(),this.hass&&this.entities?.fan&&_t(this.hass,this.entities.fan)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.entities?.light&&xt(this.hass,this.entities.light)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{entityId:this.entityId,entities:this.entities}}))}render(){if(!this.hass||!this.entityId)return q``;const t=this._getDisplayName(),e=this._isFanOn(),i=this._getSpeed(),s=this._isLightOn(),n=!!this.entities?.light,o=!!this.entities?.timer,r=this._getTimerData(),a=i>0?`Speed ${i}`:"Off";return q`
+      `]}_getDisplayName(){return this.name?this.name:this.hass&&this.entityId?this.hass.states[this.entityId]?.attributes?.friendly_name??this.entityId:""}_isFanOn(){return!(!this.hass||!this.entityId)&&mt(this.hass,this.entityId)}_getSpeed(){if(!this.hass||!this.entityId)return 0;const t=vt(this.hass,this.entityId);if(!t)return 0;const e=t.match(/\d+/);return e?parseInt(e[0],10):0}_isLightOn(){return!(!this.hass||!this.entities?.light)&&mt(this.hass,this.entities.light)}_getTimerData(){if(!this.hass||!this.entities?.timer)return{duration:0,remaining:0};return bt(this.hass,this.entities.timer)??{duration:0,remaining:0}}_onFanToggle(t){t.stopPropagation(),this.hass&&this.entities?.fan&&_t(this.hass,this.entities.fan)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.entities?.light&&xt(this.hass,this.entities.light)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{entityId:this.entityId,entities:this.entities}}))}render(){if(!this.hass||!this.entityId)return q``;const t=this._getDisplayName(),e=this._isFanOn(),i=this._getSpeed(),s=this._isLightOn(),n=!!this.entities?.light,o=!!this.entities?.timer,r=this._getTimerData();return q`
       <ha-card>
         <div class="card-content" @click=${this._openRemote}>
           <div class="icons-row">
@@ -252,7 +259,6 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           <div class="state-info">
             <span class="primary">${t}</span>
             <div class="secondary-row">
-              <span class="secondary">${a}</span>
               <create-fan-speed-dots .speed=${i}></create-fan-speed-dots>
               ${o?q`<create-fan-timer-display
                     .duration=${r.duration}
@@ -534,6 +540,13 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
             </div>
           `:""}
     `}};function Mt(t){if(!t)return 0;const e=t.match(/(\d+)/);return e?parseInt(e[1],10):0}function zt(t,e){if(0===e.length)return{fanOn:!1,speed:0,speedPreset:"",speedLabel:"Off",lightOn:!1,hasLight:!1,hasColor:!1,directionClockwise:!0,hasDirection:!1,muteOn:!1,hasMute:!1,hasTimer:!1,hasCooldowns:!1,hasCooldown1h:!1,hasCooldown2h:!1,hasCooldown4h:!1};const i=e.every(e=>mt(t,e.fan)),s=e.map(e=>vt(t,e.fan)),n=s.map(Mt),o=n.length>0&&n.every(t=>t===n[0]),r=i&&o?n[0]:0,a=i&&o?s[0]??"":"",h=i?o?`Speed ${r}`:"Mixed":"Off",c=e.filter(t=>null!=t.light),l=c.length>0,d=l&&c.every(e=>mt(t,e.light)),p=e.filter(t=>null!=t.color),u=p.length>0;let g;if(u){const e=p.map(e=>ft(t,e.color)),i=e.length>0&&e.every(t=>t===e[0]);g=i?e[0]:void 0}const f=e.filter(t=>null!=t.direction),m=f.length>0;let v=!0;if(m){const e=f.map(e=>mt(t,e.direction)),i=e.every(t=>t===e[0]);v=!i||e[0]}const b=e.filter(t=>null!=t.mute),_=b.length>0,$=_&&b.every(e=>mt(t,e.mute));let y;for(const i of e)if(i.timer){const e=bt(t,i.timer);if(e){y=e;break}}const w=e.some(t=>null!=t.timer),x=e.some(t=>null!=t.cooldown1h),E=e.some(t=>null!=t.cooldown2h),A=e.some(t=>null!=t.cooldown4h);return{fanOn:i,speed:r,speedPreset:a,speedLabel:h,lightOn:d,hasLight:l,color:g,hasColor:u,directionClockwise:v,hasDirection:m,muteOn:$,hasMute:_,timerData:y,hasTimer:w,hasCooldowns:x||E||A,hasCooldown1h:x,hasCooldown2h:E,hasCooldown4h:A}}function Ut(t,e){const i=e.length>0&&e.every(e=>mt(t,e.fan));for(const s of e)i?wt(t,s.fan):yt(t,s.fan)}function Dt(t,e){for(const i of e)i.light&&xt(t,i.light)}t([pt({attribute:!1})],Pt.prototype,"hass",void 0),t([pt({attribute:!1})],Pt.prototype,"entities",void 0),Pt=t([ct("create-fan-remote-popup")],Pt);let Nt=class extends at{constructor(){super(...arguments),this.name=""}static get styles(){return[Ct,kt,r`
+        :host {
+          display: block;
+          max-width: 320px;
+        }
+        ha-card {
+          padding: 10px 12px;
+        }
         @keyframes spin {
           to {
             transform: rotate(360deg);
@@ -566,7 +579,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           align-items: center;
           gap: 8px;
         }
-      `]}_getGroupState(){return this.hass&&this.fanEntitiesList?.length?zt(this.hass,this.fanEntitiesList):null}_onFanToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Ut(this.hass,this.fanEntitiesList)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Dt(this.hass,this.fanEntitiesList)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{fanEntitiesList:this.fanEntitiesList}}))}render(){if(!this.hass||!this.fanEntitiesList?.length)return q``;const t=this._getGroupState();if(!t)return q``;const e=t.fanOn,i=t.speed,s=t.lightOn,n=t.hasLight,o=t.hasTimer,r=t.timerData,a=i>0?`Speed ${i}`:-1===i?"Mixed":"Off";return q`
+      `]}_getGroupState(){return this.hass&&this.fanEntitiesList?.length?zt(this.hass,this.fanEntitiesList):null}_onFanToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Ut(this.hass,this.fanEntitiesList)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Dt(this.hass,this.fanEntitiesList)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{fanEntitiesList:this.fanEntitiesList}}))}render(){if(!this.hass||!this.fanEntitiesList?.length)return q``;const t=this._getGroupState();if(!t)return q``;const e=t.fanOn,i=t.speed,s=t.lightOn,n=t.hasLight,o=t.hasTimer,r=t.timerData;return q`
       <ha-card>
         <div class="card-content" @click=${this._openRemote}>
           <div class="icons-row">
@@ -580,7 +593,6 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           <div class="state-info">
             <span class="primary">${this.name}</span>
             <div class="secondary-row">
-              <span class="secondary">${a}</span>
               <create-fan-speed-dots .speed=${-1===i?0:i}></create-fan-speed-dots>
               ${o?q`<create-fan-timer-display
                     .duration=${r.duration}

@@ -21,6 +21,13 @@ export class CreateFanGroupCompactCard extends LitElement {
       mushroomTheme,
       mushroomCardStyle,
       css`
+        :host {
+          display: block;
+          max-width: 320px;
+        }
+        ha-card {
+          padding: 10px 12px;
+        }
         @keyframes spin {
           to {
             transform: rotate(360deg);
@@ -100,7 +107,6 @@ export class CreateFanGroupCompactCard extends LitElement {
     const hasLight = state.hasLight;
     const hasTimer = state.hasTimer;
     const timerData = state.timerData;
-    const speedText = speed > 0 ? `Speed ${speed}` : (speed === -1 ? 'Mixed' : 'Off');
 
     return html`
       <ha-card>
@@ -118,7 +124,6 @@ export class CreateFanGroupCompactCard extends LitElement {
           <div class="state-info">
             <span class="primary">${this.name}</span>
             <div class="secondary-row">
-              <span class="secondary">${speedText}</span>
               <create-fan-speed-dots .speed=${speed === -1 ? 0 : speed}></create-fan-speed-dots>
               ${hasTimer
                 ? html`<create-fan-timer-display

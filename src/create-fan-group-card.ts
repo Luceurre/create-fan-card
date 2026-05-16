@@ -54,6 +54,14 @@ export class CreateFanGroupRemotePopupCard extends LitElement {
     return 6;
   }
 
+  public getGridOptions() {
+    return {
+      columns: 6,
+      rows: 1,
+      min_columns: 4,
+    };
+  }
+
   protected render() {
     if (!this._hass || !this._fanEntitiesList) {
       return html``;
@@ -112,6 +120,14 @@ export class CreateFanGroupCard extends LitElement {
 
   public getCardSize(): number {
     return 3;
+  }
+
+  public getGridOptions() {
+    return {
+      columns: 6,
+      rows: 1,
+      min_columns: 4,
+    };
   }
 
   private _resolveEntities(hass: HomeAssistant, config: CreateFanGroupCardConfig): FanEntities[] {

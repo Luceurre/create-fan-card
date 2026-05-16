@@ -27,10 +27,20 @@ export interface LovelaceCardConfig {
   [key: string]: any;
 }
 
+export interface LovelaceGridOptions {
+  rows?: number;
+  columns?: number;
+  min_columns?: number;
+  max_columns?: number;
+  min_rows?: number;
+  max_rows?: number;
+}
+
 export interface LovelaceCard {
   hass: HomeAssistant;
   setConfig(config: Record<string, any>): void;
   getCardSize(): number;
+  getGridOptions?(): LovelaceGridOptions;
 }
 
 export interface LovelaceCardEditor {

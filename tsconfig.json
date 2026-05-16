@@ -6,8 +6,8 @@
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
     "lib": ["es2020", "dom"],
-    "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "noEmit": false
   },
   "include": ["src/**/*.ts"]
 }

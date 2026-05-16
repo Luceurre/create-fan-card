@@ -1,7 +1,7 @@
 {
   "name": "create-fan-card",
   "version": "0.1.0",
-  "main": "dist/create-fan-card.js",
+  "main": "create-fan-card.js",
   "scripts": {
     "build": "rollup -c rollup.config.mjs",
     "test": "vitest run"

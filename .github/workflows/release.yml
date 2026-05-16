@@ -19,4 +19,4 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/create-fan-card.js
+          files: create-fan-card.js

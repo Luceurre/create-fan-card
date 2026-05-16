@@ -5,7 +5,7 @@ import resolve from '@rollup/plugin-node-resolve';
 export default {
   input: 'src/create-fan-card.ts',
   output: {
-    file: 'dist/create-fan-card.js',
+    file: 'create-fan-card.js',
     format: 'es',
     sourcemap: true,
   },

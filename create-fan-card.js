@@ -36,7 +36,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function ut(t){return pt({...t,state:!0,attribute:!1})}function gt(t,e){const i={fan:e},s=e.indexOf(".");if(-1===s)return i;const n=e.substring(s+1),o={light:`light.${n}_light`,color:`select.${n}_color`,direction:`switch.${n}_direction`,mute:`switch.${n}_mute`,timer:`sensor.${n}_timer`,cooldown1h:`button.${n}_cooldown_1h`,cooldown2h:`button.${n}_cooldown_2h`,cooldown4h:`button.${n}_cooldown_4h`};for(const[e,s]of Object.entries(o))t.states[s]&&(i[e]=s);return i}function ft(t,e){return t.states[e]?.state}function mt(t,e){const i=ft(t,e);return"on"===i||"ON"===i}function vt(t,e){return t.states[e]?.attributes?.preset_mode}function bt(t,e){const i=ft(t,e);if(i)try{const t=JSON.parse(i);return{duration:t.duration??0,remaining:t.remaining??0}}catch{return}}function _t(t,e){t.callService("fan","toggle",{entity_id:e})}function yt(t,e,i){t.callService("fan","set_preset_mode",{entity_id:e,preset_mode:i})}function $t(t,e){t.callService("fan","turn_on",{entity_id:e})}function wt(t,e){t.callService("fan","turn_off",{entity_id:e})}function xt(t,e){t.callService("light","toggle",{entity_id:e})}function Et(t,e,i){t.callService("select","select_option",{entity_id:e,option:i})}function At(t,e){const i=e.split(".")[0];t.callService(i,"toggle",{entity_id:e})}function St(t,e){t.callService("button","press",{entity_id:e})}const Ct=r`
+ */function ut(t){return pt({...t,state:!0,attribute:!1})}function gt(t,e){const i={fan:e},s=e.indexOf(".");if(-1===s)return i;const n=e.substring(s+1),o={light:`light.${n}_light`,color:`select.${n}_color`,direction:`switch.${n}_direction`,mute:`switch.${n}_mute`,timer:`sensor.${n}_timer`,cooldown1h:`button.${n}_cooldown_1h`,cooldown2h:`button.${n}_cooldown_2h`,cooldown4h:`button.${n}_cooldown_4h`};for(const[e,s]of Object.entries(o))t.states[s]&&(i[e]=s);return i}function ft(t,e){return t.states[e]?.state}function mt(t,e){const i=ft(t,e);return"on"===i||"ON"===i}function vt(t,e){return t.states[e]?.attributes?.preset_mode}function bt(t,e){const i=ft(t,e);if(i)try{const t=JSON.parse(i);return{duration:t.duration??0,remaining:t.remaining??0}}catch{return}}function _t(t,e){t.callService("fan","toggle",{entity_id:e})}function yt(t,e,i){t.callService("fan","set_preset_mode",{entity_id:e,preset_mode:i})}function $t(t,e){t.callService("fan","turn_on",{entity_id:e})}function wt(t,e){t.callService("light","toggle",{entity_id:e})}function xt(t,e,i){t.callService("select","select_option",{entity_id:e,option:i})}function Et(t,e){const i=e.split(".")[0];t.callService(i,"toggle",{entity_id:e})}function At(t,e){t.callService("button","press",{entity_id:e})}const St=r`
   :host {
     --mush-spacing: 12px;
     --mush-card-primary-color: var(--primary-text-color);
@@ -59,7 +59,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
     --mush-rgb-unavailable: var(--rgb-unavailable-color, 189, 189, 189);
     --mush-rgb-info: var(--rgb-info-color, 158, 158, 158);
   }
-`,kt=r`
+`,Ct=r`
   ha-card {
     display: flex;
     flex-direction: column;
@@ -170,7 +170,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
   ha-icon {
     --mdi-icon-size: 20px;
   }
-`;let Ot=class extends at{constructor(){super(...arguments),this.speed=0}static get styles(){return[Ct,r`
+`;let kt=class extends at{constructor(){super(...arguments),this.speed=0}static get styles(){return[St,r`
         :host {
           display: inline-flex;
           align-items: center;
@@ -188,7 +188,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
         }
       `]}render(){return q`
       ${[1,2,3,4,5,6].map(t=>q`<div class="dot ${t<=this.speed?"active":""}"></div>`)}
-    `}};t([pt({type:Number})],Ot.prototype,"speed",void 0),Ot=t([ct("create-fan-speed-dots")],Ot);let Tt=class extends at{constructor(){super(...arguments),this.duration=0,this.remaining=0}static get styles(){return[Ct,r`
+    `}};t([pt({type:Number})],kt.prototype,"speed",void 0),kt=t([ct("create-fan-speed-dots")],kt);let Ot=class extends at{constructor(){super(...arguments),this.duration=0,this.remaining=0}static get styles(){return[St,r`
         :host {
           display: inline-flex;
           align-items: center;
@@ -206,7 +206,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
       `]}_formatTime(t){if(t<=0)return"0m";const e=Math.floor(t/60),i=t%60;return e>0&&i>0?`${e}h ${i}m`:e>0?`${e}h`:`${i}m`}render(){return 0===this.duration||this.remaining<=0?q``:q`
       <ha-icon .icon=${"mdi:timer-outline"}></ha-icon>
       <span>${this._formatTime(this.remaining)}</span>
-    `}};t([pt({type:Number})],Tt.prototype,"duration",void 0),t([pt({type:Number})],Tt.prototype,"remaining",void 0),Tt=t([ct("create-fan-timer-display")],Tt);let Lt=class extends at{constructor(){super(...arguments),this.entityId="",this.name=""}static get styles(){return[Ct,kt,r`
+    `}};t([pt({type:Number})],Ot.prototype,"duration",void 0),t([pt({type:Number})],Ot.prototype,"remaining",void 0),Ot=t([ct("create-fan-timer-display")],Ot);let Tt=class extends at{constructor(){super(...arguments),this.entityId="",this.name=""}static get styles(){return[St,Ct,r`
         @keyframes spin {
           to {
             transform: rotate(360deg);
@@ -241,7 +241,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           align-items: center;
           gap: 8px;
         }
-      `]}_getDisplayName(){return this.name?this.name:this.hass&&this.entityId?this.hass.states[this.entityId]?.attributes?.friendly_name??this.entityId:""}_isFanOn(){return!(!this.hass||!this.entityId)&&mt(this.hass,this.entityId)}_getSpeed(){if(!this.hass||!this.entityId)return 0;const t=vt(this.hass,this.entityId);if(!t)return 0;const e=t.match(/\d+/);return e?parseInt(e[0],10):0}_isLightOn(){return!(!this.hass||!this.entities?.light)&&mt(this.hass,this.entities.light)}_getTimerData(){if(!this.hass||!this.entities?.timer)return{duration:0,remaining:0};return bt(this.hass,this.entities.timer)??{duration:0,remaining:0}}_onFanToggle(t){t.stopPropagation(),this.hass&&this.entities?.fan&&_t(this.hass,this.entities.fan)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.entities?.light&&xt(this.hass,this.entities.light)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{entityId:this.entityId,entities:this.entities}}))}render(){if(!this.hass||!this.entityId)return q``;const t=this._getDisplayName(),e=this._isFanOn(),i=this._getSpeed(),s=this._isLightOn(),n=!!this.entities?.light,o=!!this.entities?.timer,r=this._getTimerData();return q`
+      `]}_getDisplayName(){return this.name?this.name:this.hass&&this.entityId?this.hass.states[this.entityId]?.attributes?.friendly_name??this.entityId:""}_isFanOn(){return!(!this.hass||!this.entityId)&&mt(this.hass,this.entityId)}_getSpeed(){if(!this.hass||!this.entityId)return 0;const t=vt(this.hass,this.entityId);if(!t)return 0;const e=t.match(/\d+/);return e?parseInt(e[0],10):0}_isLightOn(){return!(!this.hass||!this.entities?.light)&&mt(this.hass,this.entities.light)}_getTimerData(){if(!this.hass||!this.entities?.timer)return{duration:0,remaining:0};return bt(this.hass,this.entities.timer)??{duration:0,remaining:0}}_onFanToggle(t){t.stopPropagation(),this.hass&&this.entities?.fan&&_t(this.hass,this.entities.fan)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.entities?.light&&wt(this.hass,this.entities.light)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{entityId:this.entityId,entities:this.entities}}))}render(){if(!this.hass||!this.entityId)return q``;const t=this._getDisplayName(),e=this._isFanOn(),i=this._getSpeed(),s=this._isLightOn(),n=!!this.entities?.light,o=!!this.entities?.timer,r=this._getTimerData();return q`
       <ha-card>
         <div class="card-content" @click=${this._openRemote}>
           <div class="icons-row">
@@ -264,7 +264,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           </div>
         </div>
       </ha-card>
-    `}};t([pt({attribute:!1})],Lt.prototype,"hass",void 0),t([pt({type:String})],Lt.prototype,"entityId",void 0),t([pt({type:String})],Lt.prototype,"name",void 0),t([pt({attribute:!1})],Lt.prototype,"entities",void 0),Lt=t([ct("create-fan-compact-card")],Lt);let Pt=class extends at{static get styles(){return[Ct,r`
+    `}};t([pt({attribute:!1})],Tt.prototype,"hass",void 0),t([pt({type:String})],Tt.prototype,"entityId",void 0),t([pt({type:String})],Tt.prototype,"name",void 0),t([pt({attribute:!1})],Tt.prototype,"entities",void 0),Tt=t([ct("create-fan-compact-card")],Tt);let Lt=class extends at{static get styles(){return[St,r`
         :host {
           display: block;
           padding: 8px 0;
@@ -384,7 +384,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
         .timer-btn:hover {
           filter: brightness(1.1);
         }
-      `]}_isFanOn(){return!(!this.hass||!this.entities?.fan)&&mt(this.hass,this.entities.fan)}_getCurrentSpeed(){if(this.hass&&this.entities?.fan)return vt(this.hass,this.entities.fan)}_getSelectedColor(){if(this.hass&&this.entities?.color)return this.hass.states[this.entities.color]?.state}_isDirectionClockwise(){return!this.hass||!this.entities?.direction||mt(this.hass,this.entities.direction)}_isMuteOn(){return!(!this.hass||!this.entities?.mute)&&mt(this.hass,this.entities.mute)}_getTimerData(){if(this.hass&&this.entities?.timer)return bt(this.hass,this.entities.timer)}_handlePowerClick(){this.hass&&this.entities?.fan&&_t(this.hass,this.entities.fan)}_handleSpeedClick(t){if(!this.hass||!this.entities?.fan)return;const e=!this._isFanOn(),i=`speed${t}`;yt(this.hass,this.entities.fan,i),e&&$t(this.hass,this.entities.fan)}_handleLightToggle(){this.hass&&this.entities?.light&&xt(this.hass,this.entities.light)}_handleColorSelect(t){this.hass&&this.entities?.color&&Et(this.hass,this.entities.color,t)}_handleDirectionToggle(){this.hass&&this.entities?.direction&&At(this.hass,this.entities.direction)}_handleMuteToggle(){this.hass&&this.entities?.mute&&At(this.hass,this.entities.mute)}_handleTimerPress(t){this.hass&&St(this.hass,t)}_hasCooldowns(){return!!(this.entities?.cooldown1h||this.entities?.cooldown2h||this.entities?.cooldown4h)}render(){if(!this.hass||!this.entities)return q``;const t=this._isFanOn(),e=this._getCurrentSpeed();return q`
+      `]}_isFanOn(){return!(!this.hass||!this.entities?.fan)&&mt(this.hass,this.entities.fan)}_getCurrentSpeed(){if(this.hass&&this.entities?.fan)return vt(this.hass,this.entities.fan)}_getSelectedColor(){if(this.hass&&this.entities?.color)return this.hass.states[this.entities.color]?.state}_isDirectionClockwise(){return!this.hass||!this.entities?.direction||mt(this.hass,this.entities.direction)}_isMuteOn(){return!(!this.hass||!this.entities?.mute)&&mt(this.hass,this.entities.mute)}_getTimerData(){if(this.hass&&this.entities?.timer)return bt(this.hass,this.entities.timer)}_handlePowerClick(){this.hass&&this.entities?.fan&&_t(this.hass,this.entities.fan)}_handleSpeedClick(t){if(!this.hass||!this.entities?.fan)return;const e=!this._isFanOn(),i=`speed${t}`;yt(this.hass,this.entities.fan,i),e&&$t(this.hass,this.entities.fan)}_handleLightToggle(){this.hass&&this.entities?.light&&wt(this.hass,this.entities.light)}_handleColorSelect(t){this.hass&&this.entities?.color&&xt(this.hass,this.entities.color,t)}_handleDirectionToggle(){this.hass&&this.entities?.direction&&Et(this.hass,this.entities.direction)}_handleMuteToggle(){this.hass&&this.entities?.mute&&Et(this.hass,this.entities.mute)}_handleTimerPress(t){this.hass&&At(this.hass,t)}_hasCooldowns(){return!!(this.entities?.cooldown1h||this.entities?.cooldown2h||this.entities?.cooldown4h)}render(){if(!this.hass||!this.entities)return q``;const t=this._isFanOn(),e=this._getCurrentSpeed();return q`
       <!-- Section 1: Fan Power -->
       <div class="section">
         <div class="section-label">Power</div>
@@ -535,7 +535,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
               </div>
             </div>
           `:""}
-    `}};function Mt(t){if(!t)return 0;const e=t.match(/(\d+)/);return e?parseInt(e[1],10):0}function zt(t,e){if(0===e.length)return{fanOn:!1,speed:0,speedPreset:"",speedLabel:"Off",lightOn:!1,hasLight:!1,hasColor:!1,directionClockwise:!0,hasDirection:!1,muteOn:!1,hasMute:!1,hasTimer:!1,hasCooldowns:!1,hasCooldown1h:!1,hasCooldown2h:!1,hasCooldown4h:!1};const i=e.every(e=>mt(t,e.fan)),s=e.map(e=>vt(t,e.fan)),n=s.map(Mt),o=n.length>0&&n.every(t=>t===n[0]),r=i&&o?n[0]:0,a=i&&o?s[0]??"":"",h=i?o?`Speed ${r}`:"Mixed":"Off",c=e.filter(t=>null!=t.light),l=c.length>0,d=l&&c.every(e=>mt(t,e.light)),p=e.filter(t=>null!=t.color),u=p.length>0;let g;if(u){const e=p.map(e=>ft(t,e.color)),i=e.length>0&&e.every(t=>t===e[0]);g=i?e[0]:void 0}const f=e.filter(t=>null!=t.direction),m=f.length>0;let v=!0;if(m){const e=f.map(e=>mt(t,e.direction)),i=e.every(t=>t===e[0]);v=!i||e[0]}const b=e.filter(t=>null!=t.mute),_=b.length>0,y=_&&b.every(e=>mt(t,e.mute));let $;for(const i of e)if(i.timer){const e=bt(t,i.timer);if(e){$=e;break}}const w=e.some(t=>null!=t.timer),x=e.some(t=>null!=t.cooldown1h),E=e.some(t=>null!=t.cooldown2h),A=e.some(t=>null!=t.cooldown4h);return{fanOn:i,speed:r,speedPreset:a,speedLabel:h,lightOn:d,hasLight:l,color:g,hasColor:u,directionClockwise:v,hasDirection:m,muteOn:y,hasMute:_,timerData:$,hasTimer:w,hasCooldowns:x||E||A,hasCooldown1h:x,hasCooldown2h:E,hasCooldown4h:A}}function Ut(t,e){const i=e.length>0&&e.every(e=>mt(t,e.fan));for(const s of e)i?wt(t,s.fan):$t(t,s.fan)}function Dt(t,e){for(const i of e)i.light&&xt(t,i.light)}t([pt({attribute:!1})],Pt.prototype,"hass",void 0),t([pt({attribute:!1})],Pt.prototype,"entities",void 0),Pt=t([ct("create-fan-remote-popup")],Pt);let Nt=class extends at{constructor(){super(...arguments),this.name=""}static get styles(){return[Ct,kt,r`
+    `}};function Pt(t){if(!t)return 0;const e=t.match(/(\d+)/);return e?parseInt(e[1],10):0}function Mt(t,e){if(0===e.length)return{fanOn:!1,speed:0,speedPreset:"",speedLabel:"Off",lightOn:!1,hasLight:!1,hasColor:!1,directionClockwise:!0,hasDirection:!1,muteOn:!1,hasMute:!1,hasTimer:!1,hasCooldowns:!1,hasCooldown1h:!1,hasCooldown2h:!1,hasCooldown4h:!1};const i=e.every(e=>mt(t,e.fan)),s=e.map(e=>vt(t,e.fan)),n=s.map(Pt),o=n.length>0&&n.every(t=>t===n[0]),r=i&&o?n[0]:0,a=i&&o?s[0]??"":"",h=i?o?`Speed ${r}`:"Mixed":"Off",c=e.filter(t=>null!=t.light),l=c.length>0,d=l&&c.every(e=>mt(t,e.light)),p=e.filter(t=>null!=t.color),u=p.length>0;let g;if(u){const e=p.map(e=>ft(t,e.color)),i=e.length>0&&e.every(t=>t===e[0]);g=i?e[0]:void 0}const f=e.filter(t=>null!=t.direction),m=f.length>0;let v=!0;if(m){const e=f.map(e=>mt(t,e.direction)),i=e.every(t=>t===e[0]);v=!i||e[0]}const b=e.filter(t=>null!=t.mute),_=b.length>0,y=_&&b.every(e=>mt(t,e.mute));let $;for(const i of e)if(i.timer){const e=bt(t,i.timer);if(e){$=e;break}}const w=e.some(t=>null!=t.timer),x=e.some(t=>null!=t.cooldown1h),E=e.some(t=>null!=t.cooldown2h),A=e.some(t=>null!=t.cooldown4h);return{fanOn:i,speed:r,speedPreset:a,speedLabel:h,lightOn:d,hasLight:l,color:g,hasColor:u,directionClockwise:v,hasDirection:m,muteOn:y,hasMute:_,timerData:$,hasTimer:w,hasCooldowns:x||E||A,hasCooldown1h:x,hasCooldown2h:E,hasCooldown4h:A}}t([pt({attribute:!1})],Lt.prototype,"hass",void 0),t([pt({attribute:!1})],Lt.prototype,"entities",void 0),Lt=t([ct("create-fan-remote-popup")],Lt);function zt(t){return new Promise(e=>setTimeout(e,t))}async function Ut(t,e,i){let s=!0;for(const i of t)s||await zt(1e3),s=!1,e(i)}async function Dt(t,e){const i=e.length>0&&e.every(e=>mt(t,e.fan));await Ut(e,e=>{i?function(t,e){t.callService("fan","turn_off",{entity_id:e})}(t,e.fan):$t(t,e.fan)})}async function Nt(t,e){await Ut(e,e=>{e.light&&wt(t,e.light)})}let Rt=class extends at{constructor(){super(...arguments),this.name=""}static get styles(){return[St,Ct,r`
         @keyframes spin {
           to {
             transform: rotate(360deg);
@@ -570,7 +570,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           align-items: center;
           gap: 8px;
         }
-      `]}_getGroupState(){return this.hass&&this.fanEntitiesList?.length?zt(this.hass,this.fanEntitiesList):null}_onFanToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Ut(this.hass,this.fanEntitiesList)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Dt(this.hass,this.fanEntitiesList)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{fanEntitiesList:this.fanEntitiesList}}))}render(){if(!this.hass||!this.fanEntitiesList?.length)return q``;const t=this._getGroupState();if(!t)return q``;const e=t.fanOn,i=t.speed,s=t.lightOn,n=t.hasLight,o=t.hasTimer,r=t.timerData;return q`
+      `]}_getGroupState(){return this.hass&&this.fanEntitiesList?.length?Mt(this.hass,this.fanEntitiesList):null}_onFanToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Dt(this.hass,this.fanEntitiesList)}_onLightToggle(t){t.stopPropagation(),this.hass&&this.fanEntitiesList?.length&&Nt(this.hass,this.fanEntitiesList)}_openRemote(){this.dispatchEvent(new CustomEvent("open-remote",{bubbles:!0,composed:!0,detail:{fanEntitiesList:this.fanEntitiesList}}))}render(){if(!this.hass||!this.fanEntitiesList?.length)return q``;const t=this._getGroupState();if(!t)return q``;const e=t.fanOn,i=t.speed,s=t.lightOn,n=t.hasLight,o=t.hasTimer,r=t.timerData;return q`
       <ha-card>
         <div class="card-content" @click=${this._openRemote}>
           <div class="icons-row">
@@ -593,7 +593,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
           </div>
         </div>
       </ha-card>
-    `}};t([pt({attribute:!1})],Nt.prototype,"hass",void 0),t([pt({type:String})],Nt.prototype,"name",void 0),t([pt({attribute:!1})],Nt.prototype,"fanEntitiesList",void 0),Nt=t([ct("create-fan-group-compact-card")],Nt);let Rt=class extends at{static get styles(){return[Ct,r`
+    `}};t([pt({attribute:!1})],Rt.prototype,"hass",void 0),t([pt({type:String})],Rt.prototype,"name",void 0),t([pt({attribute:!1})],Rt.prototype,"fanEntitiesList",void 0),Rt=t([ct("create-fan-group-compact-card")],Rt);let Ht=class extends at{static get styles(){return[St,r`
         :host {
           display: block;
           padding: 8px 0;
@@ -708,7 +708,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
         .timer-btn:hover {
           filter: brightness(1.1);
         }
-      `]}_getGroupState(){return this.hass&&this.fanEntitiesList?.length?zt(this.hass,this.fanEntitiesList):null}_handlePowerClick(){this.hass&&this.fanEntitiesList?.length&&Ut(this.hass,this.fanEntitiesList)}_handleSpeedClick(t){if(!this.hass||!this.fanEntitiesList?.length)return;const e=this._getGroupState(),i=e&&!e.fanOn;!function(t,e,i){for(const s of e)yt(t,s.fan,i)}(this.hass,this.fanEntitiesList,`speed${t}`),i&&function(t,e){for(const i of e)$t(t,i.fan)}(this.hass,this.fanEntitiesList)}_handleLightToggle(){this.hass&&this.fanEntitiesList?.length&&Dt(this.hass,this.fanEntitiesList)}_handleColorSelect(t){this.hass&&this.fanEntitiesList?.length&&function(t,e,i){for(const s of e)s.color&&Et(t,s.color,i)}(this.hass,this.fanEntitiesList,t)}_handleDirectionToggle(){this.hass&&this.fanEntitiesList?.length&&function(t,e){for(const i of e)i.direction&&At(t,i.direction)}(this.hass,this.fanEntitiesList)}_handleMuteToggle(){this.hass&&this.fanEntitiesList?.length&&function(t,e){for(const i of e)i.mute&&At(t,i.mute)}(this.hass,this.fanEntitiesList)}_handleTimerPress(){this.hass&&this.fanEntitiesList?.length&&function(t,e){for(const i of e){const e=i.cooldown1h??i.cooldown2h??i.cooldown4h;e&&St(t,e)}}(this.hass,this.fanEntitiesList)}_hasCooldowns(t){return t.hasCooldowns}render(){if(!this.hass||!this.fanEntitiesList?.length)return q``;const t=this._getGroupState();if(!t)return q``;const e=t.fanOn,i=t.speedPreset;return q`
+      `]}_getGroupState(){return this.hass&&this.fanEntitiesList?.length?Mt(this.hass,this.fanEntitiesList):null}_handlePowerClick(){this.hass&&this.fanEntitiesList?.length&&Dt(this.hass,this.fanEntitiesList)}_handleSpeedClick(t){if(!this.hass||!this.fanEntitiesList?.length)return;const e=this._getGroupState(),i=e&&!e.fanOn;!async function(t,e,i){await Ut(e,e=>yt(t,e.fan,i))}(this.hass,this.fanEntitiesList,`speed${t}`),i&&async function(t,e){await Ut(e,e=>$t(t,e.fan))}(this.hass,this.fanEntitiesList)}_handleLightToggle(){this.hass&&this.fanEntitiesList?.length&&Nt(this.hass,this.fanEntitiesList)}_handleColorSelect(t){this.hass&&this.fanEntitiesList?.length&&async function(t,e,i){await Ut(e,e=>{e.color&&xt(t,e.color,i)})}(this.hass,this.fanEntitiesList,t)}_handleDirectionToggle(){this.hass&&this.fanEntitiesList?.length&&async function(t,e){await Ut(e,e=>{e.direction&&Et(t,e.direction)})}(this.hass,this.fanEntitiesList)}_handleMuteToggle(){this.hass&&this.fanEntitiesList?.length&&async function(t,e){await Ut(e,e=>{e.mute&&Et(t,e.mute)})}(this.hass,this.fanEntitiesList)}_handleTimerPress(){this.hass&&this.fanEntitiesList?.length&&async function(t,e){await Ut(e,e=>{const i=e.cooldown1h??e.cooldown2h??e.cooldown4h;i&&At(t,i)})}(this.hass,this.fanEntitiesList)}_hasCooldowns(t){return t.hasCooldowns}render(){if(!this.hass||!this.fanEntitiesList?.length)return q``;const t=this._getGroupState();if(!t)return q``;const e=t.fanOn,i=t.speedPreset;return q`
       <div class="section">
         <div class="section-label">Power</div>
         <button
@@ -852,14 +852,14 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
               </div>
             </div>
           `:""}
-    `}};function Ht(t,e){if(void 0!==window.browser_mod){const t=new CustomEvent("ll-custom",{bubbles:!0,composed:!0,detail:{browser_mod:{service:"browser_mod.popup",data:{title:e.title,content:e.content}}}});document.body.dispatchEvent(t)}else{const i=e.content.entity;if(i){const e=new CustomEvent("hass-more-info",{bubbles:!0,composed:!0,detail:{entityId:i}});t.dispatchEvent(e)}}}t([pt({attribute:!1})],Rt.prototype,"hass",void 0),t([pt({attribute:!1})],Rt.prototype,"fanEntitiesList",void 0),Rt=t([ct("create-fan-group-remote-popup")],Rt);let It=class extends at{set hass(t){const e=this._hass;this._hass=t,this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){this._config=t,this._fanEntitiesList=t.fanEntitiesList}getCardSize(){return 6}getGridOptions(){return{columns:6,rows:1,min_columns:4}}render(){return this._hass&&this._fanEntitiesList?q`
+    `}};function It(t,e){if(void 0!==window.browser_mod){const t=new CustomEvent("ll-custom",{bubbles:!0,composed:!0,detail:{browser_mod:{service:"browser_mod.popup",data:{title:e.title,content:e.content}}}});document.body.dispatchEvent(t)}else{const i=e.content.entity;if(i){const e=new CustomEvent("hass-more-info",{bubbles:!0,composed:!0,detail:{entityId:i}});t.dispatchEvent(e)}}}t([pt({attribute:!1})],Ht.prototype,"hass",void 0),t([pt({attribute:!1})],Ht.prototype,"fanEntitiesList",void 0),Ht=t([ct("create-fan-group-remote-popup")],Ht);let Ft=class extends at{set hass(t){const e=this._hass;this._hass=t,this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){this._config=t,this._fanEntitiesList=t.fanEntitiesList}getCardSize(){return 6}getGridOptions(){return{columns:6,rows:1,min_columns:4}}render(){return this._hass&&this._fanEntitiesList?q`
       <ha-card>
         <create-fan-group-remote-popup
           .hass=${this._hass}
           .fanEntitiesList=${this._fanEntitiesList}
         ></create-fan-group-remote-popup>
       </ha-card>
-    `:q``}};It.styles=r`
+    `:q``}};Ft.styles=r`
     :host {
       display: block;
     }
@@ -868,25 +868,25 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
       display: block;
       padding: 16px;
     }
-  `,t([ut()],It.prototype,"_config",void 0),t([ut()],It.prototype,"_fanEntitiesList",void 0),It=t([ct("create-fan-group-remote-popup-card")],It);let Ft=class extends at{static getStubConfig(){return{entities:[]}}set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._fanEntitiesList=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entities||!Array.isArray(t.entities)||0===t.entities.length)throw new Error("entities must be a non-empty array of fan entity IDs");this._config=t,this._fanEntitiesList=this._hass?this._resolveEntities(this._hass,t):void 0}getCardSize(){return 3}getGridOptions(){return{columns:6,rows:1,min_columns:4}}_resolveEntities(t,e){return e.entities.map(e=>gt(t,e))}_getTitle(){return this._config?this._config.name??"Fan Group":"Fan Group"}_handleOpenRemote(t){const e=t.detail.fanEntitiesList[0]?.fan;Ht(this,{title:this._getTitle(),content:{type:"custom:create-fan-group-remote-popup-card",entity:e,fanEntitiesList:t.detail.fanEntitiesList}})}render(){return this._config&&this._hass?q`
+  `,t([ut()],Ft.prototype,"_config",void 0),t([ut()],Ft.prototype,"_fanEntitiesList",void 0),Ft=t([ct("create-fan-group-remote-popup-card")],Ft);let jt=class extends at{static getStubConfig(){return{entities:[]}}set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._fanEntitiesList=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entities||!Array.isArray(t.entities)||0===t.entities.length)throw new Error("entities must be a non-empty array of fan entity IDs");this._config=t,this._fanEntitiesList=this._hass?this._resolveEntities(this._hass,t):void 0}getCardSize(){return 3}getGridOptions(){return{columns:6,rows:1,min_columns:4}}_resolveEntities(t,e){return e.entities.map(e=>gt(t,e))}_getTitle(){return this._config?this._config.name??"Fan Group":"Fan Group"}_handleOpenRemote(t){const e=t.detail.fanEntitiesList[0]?.fan;It(this,{title:this._getTitle(),content:{type:"custom:create-fan-group-remote-popup-card",entity:e,fanEntitiesList:t.detail.fanEntitiesList}})}render(){return this._config&&this._hass?q`
       <create-fan-group-compact-card
         .hass=${this._hass}
         .name=${this._config.name??""}
         .fanEntitiesList=${this._fanEntitiesList??[]}
         @open-remote=${this._handleOpenRemote}
       ></create-fan-group-compact-card>
-    `:q``}};Ft.styles=r`
+    `:q``}};jt.styles=r`
     :host {
       display: block;
     }
-  `,t([ut()],Ft.prototype,"_config",void 0),t([ut()],Ft.prototype,"_fanEntitiesList",void 0),Ft=t([ct("create-fan-group-card")],Ft);const jt=window;jt.customCards=jt.customCards||[];const qt=jt.customCards;qt.some(t=>"create-fan-group-card"===t.type)||qt.push({type:"create-fan-group-card",name:"Create Fan Group Card",description:"A Mushroom-styled group card for controlling multiple Create Ikohs ceiling fans"});let Bt=class extends at{set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._entities=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entity&&!t.entities?.fan)throw new Error("entity is required");this._config=t,this._hass&&(this._entities=this._resolveEntities(this._hass,t))}getCardSize(){return 6}getGridOptions(){return{columns:6,rows:1,min_columns:4}}_resolveEntities(t,e){return e.entities?e.entities:gt(t,e.entity)}render(){return this._hass&&this._entities?q`
+  `,t([ut()],jt.prototype,"_config",void 0),t([ut()],jt.prototype,"_fanEntitiesList",void 0),jt=t([ct("create-fan-group-card")],jt);const qt=window;qt.customCards=qt.customCards||[];const Bt=qt.customCards;Bt.some(t=>"create-fan-group-card"===t.type)||Bt.push({type:"create-fan-group-card",name:"Create Fan Group Card",description:"A Mushroom-styled group card for controlling multiple Create Ikohs ceiling fans"});let Gt=class extends at{set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._entities=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entity&&!t.entities?.fan)throw new Error("entity is required");this._config=t,this._hass&&(this._entities=this._resolveEntities(this._hass,t))}getCardSize(){return 6}getGridOptions(){return{columns:6,rows:1,min_columns:4}}_resolveEntities(t,e){return e.entities?e.entities:gt(t,e.entity)}render(){return this._hass&&this._entities?q`
       <ha-card>
         <create-fan-remote-popup
           .hass=${this._hass}
           .entities=${this._entities}
         ></create-fan-remote-popup>
       </ha-card>
-    `:q``}};Bt.styles=r`
+    `:q``}};Gt.styles=r`
     :host {
       display: block;
     }
@@ -895,7 +895,7 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
       display: block;
       padding: 16px;
     }
-  `,t([ut()],Bt.prototype,"_config",void 0),t([ut()],Bt.prototype,"_entities",void 0),Bt=t([ct("create-fan-remote-popup-card")],Bt);let Gt=class extends at{static getStubConfig(){return{entity:""}}set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._entities=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entity)throw new Error("entity is required");this._config=t,this._entities=this._hass?this._resolveEntities(this._hass,t):void 0}getCardSize(){return 3}getGridOptions(){return{columns:6,rows:1,min_columns:4}}_resolveEntities(t,e){const i=gt(t,e.entity);return e.light_entity?{...i,light:e.light_entity}:i}_getTitle(){return this._config?this._config.name??this._hass?.states[this._config.entity]?.attributes?.friendly_name??"Fan Remote":"Fan Remote"}_handleOpenRemote(t){Ht(this,{title:this._getTitle(),content:{type:"custom:create-fan-remote-popup-card",entity:t.detail.entityId,entities:t.detail.entities}})}render(){return this._config&&this._hass?q`
+  `,t([ut()],Gt.prototype,"_config",void 0),t([ut()],Gt.prototype,"_entities",void 0),Gt=t([ct("create-fan-remote-popup-card")],Gt);let Wt=class extends at{static getStubConfig(){return{entity:""}}set hass(t){const e=this._hass;this._hass=t,t&&this._config&&(this._entities=this._resolveEntities(t,this._config)),this.requestUpdate("hass",e)}get hass(){return this._hass}setConfig(t){if(!t.entity)throw new Error("entity is required");this._config=t,this._entities=this._hass?this._resolveEntities(this._hass,t):void 0}getCardSize(){return 3}getGridOptions(){return{columns:6,rows:1,min_columns:4}}_resolveEntities(t,e){const i=gt(t,e.entity);return e.light_entity?{...i,light:e.light_entity}:i}_getTitle(){return this._config?this._config.name??this._hass?.states[this._config.entity]?.attributes?.friendly_name??"Fan Remote":"Fan Remote"}_handleOpenRemote(t){It(this,{title:this._getTitle(),content:{type:"custom:create-fan-remote-popup-card",entity:t.detail.entityId,entities:t.detail.entities}})}render(){return this._config&&this._hass?q`
       <create-fan-compact-card
         .hass=${this._hass}
         .entityId=${this._config.entity}
@@ -903,9 +903,9 @@ const ct=t=>(e,i)=>{void 0!==i?i.addInitializer(()=>{customElements.define(t,e)}
         .entities=${this._entities}
         @open-remote=${this._handleOpenRemote}
       ></create-fan-compact-card>
-    `:q``}};Gt.styles=r`
+    `:q``}};Wt.styles=r`
     :host {
       display: block;
     }
-  `,t([ut()],Gt.prototype,"_config",void 0),t([ut()],Gt.prototype,"_entities",void 0),Gt=t([ct("create-fan-card")],Gt);const Wt=window;Wt.customCards=Wt.customCards||[];const Vt=Wt.customCards;Vt.some(t=>"create-fan-card"===t.type)||Vt.push({type:"create-fan-card",name:"Create Fan Card",description:"A Mushroom-styled card for controlling Create Ikohs ceiling fans"});export{Gt as CreateFanCard,Bt as CreateFanRemotePopupCard};
+  `,t([ut()],Wt.prototype,"_config",void 0),t([ut()],Wt.prototype,"_entities",void 0),Wt=t([ct("create-fan-card")],Wt);const Vt=window;Vt.customCards=Vt.customCards||[];const Jt=Vt.customCards;Jt.some(t=>"create-fan-card"===t.type)||Jt.push({type:"create-fan-card",name:"Create Fan Card",description:"A Mushroom-styled card for controlling Create Ikohs ceiling fans"});export{Wt as CreateFanCard,Gt as CreateFanRemotePopupCard};
 //# sourceMappingURL=create-fan-card.js.map

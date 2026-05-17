@@ -49,7 +49,7 @@ function createFullHass(): HomeAssistant {
   return createMockHass({
     'fan.test_fan': { state: 'on', attributes: { preset_mode: 'speed3' } },
     'light.test_light': { state: 'off', attributes: {} },
-    'select.test_color': { state: 'white', attributes: {} },
+    'select.test_color': { state: 'cold', attributes: {} },
     'switch.test_direction': { state: 'on', attributes: {} },
     'switch.test_mute': { state: 'off', attributes: {} },
     'sensor.test_timer': { state: JSON.stringify({ duration: 60, remaining: 30 }), attributes: {} },
@@ -106,7 +106,7 @@ describe('create-fan-remote-popup', () => {
     const hass = createMockHass({
       'fan.test_fan': { state: 'off', attributes: {} },
       'light.test_light': { state: 'off', attributes: {} },
-      'select.test_color': { state: 'white', attributes: {} },
+      'select.test_color': { state: 'cold', attributes: {} },
       'switch.test_direction': { state: 'on', attributes: {} },
       'switch.test_mute': { state: 'off', attributes: {} },
       'sensor.test_timer': { state: JSON.stringify({ duration: 60, remaining: 30 }), attributes: {} },
@@ -171,9 +171,10 @@ describe('create-fan-remote-popup', () => {
   it('color pills exist with correct options', async () => {
     const element = await renderPopup(createFullHass(), createFullEntities());
     const pills = element.shadowRoot!.querySelectorAll('.pill');
-    expect(pills.length).toBe(2);
-    expect(pills[0].textContent?.trim()).toBe('White');
-    expect(pills[1].textContent?.trim()).toBe('Yellow');
+    expect(pills.length).toBe(3);
+    expect(pills[0].textContent?.trim()).toBe('Cold');
+    expect(pills[1].textContent?.trim()).toBe('White');
+    expect(pills[2].textContent?.trim()).toBe('Warm');
   });
 
   it('color pill highlights current selection', async () => {
@@ -181,6 +182,7 @@ describe('create-fan-remote-popup', () => {
     const pills = element.shadowRoot!.querySelectorAll('.pill');
     expect(pills[0].classList.contains('active')).toBe(true);
     expect(pills[1].classList.contains('active')).toBe(false);
+    expect(pills[2].classList.contains('active')).toBe(false);
   });
 
   it('color pill click calls callSelectOption', async () => {
@@ -189,10 +191,10 @@ describe('create-fan-remote-popup', () => {
     const element = await renderPopup(hass, createFullEntities());
     const pills = element.shadowRoot!.querySelectorAll('.pill');
 
-    (pills[1] as HTMLElement).click();
+    (pills[2] as HTMLElement).click();
     expect(spy).toHaveBeenCalledWith('select', 'select_option', {
       entity_id: 'select.test_color',
-      option: 'yellow',
+      option: 'warm',
     });
   });
 

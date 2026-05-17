@@ -66,7 +66,7 @@ describe('ha-service utils', () => {
     expect(callService).toHaveBeenCalledWith('light', 'toggle', { entity_id: 'light.kitchen' });
   });
 
-  it.each(['white', 'yellow'])('calls the select option service for %s', (option) => {
+  it.each(['cold', 'white', 'warm'])('calls the select option service for %s', (option) => {
     callSelectOption(hass, 'select.fan_color', option);
 
     expect(callService).toHaveBeenCalledOnce();

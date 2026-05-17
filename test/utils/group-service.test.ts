@@ -142,11 +142,11 @@ describe('group-service', () => {
         { fan: 'fan.b', color: 'select.b_color' },
       ];
 
-      groupColorSelect(hass, fans, 'white');
+      groupColorSelect(hass, fans, 'warm');
 
       expect(callService).toHaveBeenCalledTimes(2);
-      expect(callService).toHaveBeenCalledWith('select', 'select_option', { entity_id: 'select.a_color', option: 'white' });
-      expect(callService).toHaveBeenCalledWith('select', 'select_option', { entity_id: 'select.b_color', option: 'white' });
+      expect(callService).toHaveBeenCalledWith('select', 'select_option', { entity_id: 'select.a_color', option: 'warm' });
+      expect(callService).toHaveBeenCalledWith('select', 'select_option', { entity_id: 'select.b_color', option: 'warm' });
     });
   });
 

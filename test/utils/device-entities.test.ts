@@ -45,7 +45,7 @@ function createMockHass(): HomeAssistant {
   const states: Record<string, HassEntity> = {
     'fan.espsomfyrts_fan_3': createEntityState('fan.espsomfyrts_fan_3', 'on', { preset_mode: 'speed3' }),
     'light.espsomfyrts_fan_3_light': createEntityState('light.espsomfyrts_fan_3_light', 'on'),
-    'select.espsomfyrts_fan_3_color': createEntityState('select.espsomfyrts_fan_3_color', 'white'),
+    'select.espsomfyrts_fan_3_color': createEntityState('select.espsomfyrts_fan_3_color', 'cold'),
     'switch.espsomfyrts_fan_3_direction': createEntityState('switch.espsomfyrts_fan_3_direction', 'ON'),
     'switch.espsomfyrts_fan_3_mute': createEntityState('switch.espsomfyrts_fan_3_mute', 'off'),
     'sensor.espsomfyrts_fan_3_timer': createEntityState('sensor.espsomfyrts_fan_3_timer', '{"duration":120,"remaining":45}'),
@@ -110,7 +110,7 @@ describe('device entity discovery utils', () => {
   it('returns the current state string for an entity', () => {
     const hass = createMockHass();
 
-    expect(getEntityState(hass, 'select.espsomfyrts_fan_3_color')).toBe('white');
+    expect(getEntityState(hass, 'select.espsomfyrts_fan_3_color')).toBe('cold');
     expect(getEntityState(hass, 'sensor.missing')).toBeUndefined();
   });
 

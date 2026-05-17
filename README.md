@@ -70,7 +70,7 @@ When configured with a fan entity, the card automatically discovers these compan
 | Entity | Domain | Purpose |
 |--------|--------|---------|
 | Light | `light.*_light` | Toggle fan light on/off |
-| Color | `select.*_color` | Switch between white and yellow light |
+| Color | `select.*_color` | Switch between cold, white, and warm light |
 | Direction | `switch.*_direction` | Toggle clockwise / counter-clockwise rotation |
 | Mute | `switch.*_mute` | Toggle fan mute mode |
 | Timer | `sensor.*_timer` | Displays active cooldown timer remaining time |

@@ -156,9 +156,9 @@ describe('getGroupState', () => {
   it('returns common color when all fans agree', () => {
     const hass = createMockHass({
       'fan.a': createEntityState('fan.a', 'on', { preset_mode: 'speed3' }),
-      'select.a_color': createEntityState('select.a_color', 'white'),
+      'select.a_color': createEntityState('select.a_color', 'cold'),
       'fan.b': createEntityState('fan.b', 'on', { preset_mode: 'speed3' }),
-      'select.b_color': createEntityState('select.b_color', 'white'),
+      'select.b_color': createEntityState('select.b_color', 'cold'),
     });
 
     const fans: FanEntities[] = [
@@ -168,7 +168,7 @@ describe('getGroupState', () => {
 
     const result = getGroupState(hass, fans);
 
-    expect(result.color).toBe('white');
+    expect(result.color).toBe('cold');
   });
 
   it('returns color undefined when fans have different colors', () => {
@@ -176,7 +176,7 @@ describe('getGroupState', () => {
       'fan.a': createEntityState('fan.a', 'on', { preset_mode: 'speed3' }),
       'select.a_color': createEntityState('select.a_color', 'white'),
       'fan.b': createEntityState('fan.b', 'on', { preset_mode: 'speed3' }),
-      'select.b_color': createEntityState('select.b_color', 'yellow'),
+      'select.b_color': createEntityState('select.b_color', 'warm'),
     });
 
     const fans: FanEntities[] = [

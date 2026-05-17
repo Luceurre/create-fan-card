@@ -42,7 +42,7 @@ function createMockHass(): HomeAssistant {
         last_updated: '2026-05-16T00:00:00Z',
       },
       'select.test_fan_1_color': {
-        state: 'white',
+        state: 'cold',
         attributes: {},
         entity_id: 'select.test_fan_1_color',
         last_changed: '2026-05-16T00:00:00Z',

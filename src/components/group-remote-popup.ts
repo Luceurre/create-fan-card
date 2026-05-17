@@ -259,16 +259,22 @@ export class CreateFanGroupRemotePopup extends LitElement {
               <div class="section-label">Color</div>
               <div class="pill-group">
                 <button
+                  class="pill ${state.color === 'cold' ? 'active' : ''}"
+                  @click=${() => this._handleColorSelect('cold')}
+                >
+                  Cold
+                </button>
+                <button
                   class="pill ${state.color === 'white' ? 'active' : ''}"
                   @click=${() => this._handleColorSelect('white')}
                 >
                   White
                 </button>
                 <button
-                  class="pill ${state.color === 'yellow' ? 'active' : ''}"
-                  @click=${() => this._handleColorSelect('yellow')}
+                  class="pill ${state.color === 'warm' ? 'active' : ''}"
+                  @click=${() => this._handleColorSelect('warm')}
                 >
-                  Yellow
+                  Warm
                 </button>
               </div>
             </div>
